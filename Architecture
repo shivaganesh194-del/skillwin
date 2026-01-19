@@ -1,0 +1,9 @@
+User → GitHub Pages
+        ↓
+Firebase Cloud Function
+        ↓
+Razorpay Order API
+        ↓
+Payment Success
+        ↓
+Ticket Generated
