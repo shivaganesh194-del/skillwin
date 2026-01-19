@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>SkillWin</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<div class="container">
+  <div class="card" id="step1">
+    <h1>Answer 1 Question • Pay ₹10 • Get 5 Tickets</h1>
+    <p class="trust">Skill-based contest | Secure UPI Payment</p>
+    <p class="question">Which is the capital of India?</p>
+    <div class="option">
+      <input type="radio" name="ans" id="opt1" value="Mumbai" />
+      <label for="opt1">Mumbai</label>
+    </div>
+    <div class="option">
+      <input type="radio" name="ans" id="opt2" value="Chennai" />
+      <label for="opt2">Chennai</label>
+    </div>
+    <div class="option">
+      <input type="radio" name="ans" id="opt3" value="New Delhi" />
+      <label for="opt3">New Delhi</label>
+    </div>
+    <div class="option">
+      <input type="radio" name="ans" id="opt4" value="Kolkata" />
+      <label for="opt4">Kolkata</label>
+    </div>
+    <button onclick="goToPayment()">CONTINUE</button>
+  </div>
+
+  <div class="card" id="step2" style="display:none;">
+    <h1>Participation Fee: ₹10</h1>
+    <p>You will receive <strong>5 Lucky Tickets</strong></p>
+    <button onclick="payNow()">PAY ₹10 & GET 5 TICKETS</button>
+    <p class="small">UPI • PhonePe • GPay • Paytm • Secure Payment</p>
+  </div>
+
+  <div class="card" id="step3" style="display:none;">
+    <h2>✅ Successfully Entered!</h2>
+    <p>Your Tickets: <span id="tickets">—</span></p>
+    <p>Draw Date: <span id="drawDate">30 March 2026</span></p>
+    <p>Time: <span id="drawTime">8:00 PM IST</span></p>
+    <button onclick="shareWhatsApp()">SHARE & GET 1 EXTRA TICKET</button>
+    <button onclick="viewTerms()">VIEW TERMS & CONDITIONS</button>
+  </div>
+
+  <p class="footer-note">
+    ⚠️ This is a skill-based promotional contest. 18+ only. Terms & Conditions apply.
+  </p>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
