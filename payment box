@@ -1,0 +1,16 @@
+<h3 class="highlight">🎉 YOU ARE ELIGIBLE</h3>
+<p>
+You answered the skill question correctly.<br><br>
+
+<b>5 Winners</b> will be selected.<br>
+Each winner receives <b>₹5,00,000</b>.<br><br>
+
+Entry fee is just <b>₹10</b>.<br>
+Smart people take decisions fast.<br><br>
+
+<span class="highlight">
+Maybe at last… you are one of the winners.
+</span>
+</p>
+
+<button class="pay" onclick="payNow()">Join Immediately – Pay ₹10</button>
