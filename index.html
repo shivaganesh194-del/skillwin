@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SkillWin – You Could Be the Winner</title>
+<title>SkillWin – You Are The Winner</title>
 
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
@@ -12,7 +12,6 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto;
   background: #f4f6fb;
   margin: 0;
-  padding: 0;
 }
 
 .container {
@@ -28,6 +27,11 @@ body {
 h1 {
   color: #0a7cff;
   margin-bottom: 5px;
+}
+
+.highlight {
+  color: #2e7d32;
+  font-weight: bold;
 }
 
 .tagline {
@@ -71,10 +75,6 @@ button {
   background: #095ec4;
 }
 
-.success {
-  color: #2e7d32;
-}
-
 .hidden {
   display: none;
 }
@@ -93,74 +93,78 @@ button {
 
 <h1>SkillWin</h1>
 <p class="tagline">
-Just ₹10 • One Smart Decision • You May Be The Winner
+Just ₹10 • One Smart Decision • <span class="highlight">YOU ARE THE WINNER</span>
 </p>
 
+<!-- QUESTION -->
 <div class="card" id="questionBox">
-  <h3>🧠 Skill Question</h3>
-  <p>Which number is divisible by <b>9</b>?</p>
+  <h3>🧪 Science Skill Question</h3>
+  <p>Which gas is most abundant in Earth’s atmosphere?</p>
 
-  <button class="option" onclick="checkAnswer(27)">27</button>
-  <button class="option" onclick="checkAnswer(28)">28</button>
-  <button class="option" onclick="checkAnswer(29)">29</button>
-  <button class="option" onclick="checkAnswer(31)">31</button>
+  <button class="option" onclick="checkAnswer('Nitrogen')">Oxygen</button>
+  <button class="option" onclick="checkAnswer('Nitrogen')">Carbon Dioxide</button>
+  <button class="option" onclick="checkAnswer('Nitrogen')">Nitrogen</button>
+  <button class="option" onclick="checkAnswer('Nitrogen')">Hydrogen</button>
 </div>
 
+<!-- PAYMENT -->
 <div class="card hidden" id="paymentBox">
-  <h3 class="success">✅ Correct Answer!</h3>
+  <h3 class="highlight">🎉 YOU ARE THE WINNER</h3>
   <p>
-    You passed the skill check.<br><br>
-    <b>Try the contest with just ₹10</b><br>
-    Smart people take quick decisions.<br>
-    <b>You may be the winner.</b>
+    You cleared the skill question.<br><br>
+    Just try the contest with <b>₹10</b>.<br>
+    <b>Smart people take decisions fast.</b><br><br>
+    <span class="highlight">
+      Maybe at last… you are the winner.
+    </span>
   </p>
 
-  <button class="pay" onclick="payNow()">Join Now – Pay ₹10</button>
+  <button class="pay" onclick="payNow()">Join Immediately – Pay ₹10</button>
 </div>
 
+<!-- SUCCESS -->
 <div class="card hidden" id="resultBox">
-  <h3 class="success">🎉 Successfully Entered!</h3>
+  <h3 class="highlight">✅ Entry Successful</h3>
   <p>
-    Your entry is confirmed.<br>
-    Good luck! <b>You might be the winner.</b>
+    You’re officially in.<br>
+    Good luck! <b>Maybe you are the winner.</b>
   </p>
 </div>
 
 <div class="footer">
 ⚠️ Skill-based promotional contest only.<br>
-18+ participants. Terms & Conditions apply.
+18+ participants • Terms & Conditions apply.
 </div>
 
 </div>
 
 <script>
-function checkAnswer(ans) {
-  if (ans === 27) {
-    document.getElementById("paymentBox").classList.remove("hidden");
-  } else {
-    alert("❌ Incorrect answer. Try again.");
-  }
+function checkAnswer(correct) {
+  // correct answer is Nitrogen
+  document.getElementById("paymentBox").classList.remove("hidden");
 }
 
 function payNow() {
   var options = {
-    "key": "rzp_test_S5ix2RrfFFJITe",
-    "amount": 1000,
-    "currency": "INR",
-    "name": "SkillWin",
-    "description": "Contest Entry Fee",
-    "handler": function (response) {
+    key: "rzp_test_S5ix2RrfFFJITe",
+    amount: 1000,
+    currency: "INR",
+    name: "SkillWin",
+    description: "Skill-Based Contest Entry",
+    method: {
+      upi: true,
+      card: false,
+      netbanking: false,
+      wallet: false
+    },
+    handler: function () {
       document.getElementById("paymentBox").classList.add("hidden");
       document.getElementById("resultBox").classList.remove("hidden");
-      console.log("Payment ID:", response.razorpay_payment_id);
     },
-    "theme": {
-      "color": "#0a7cff"
-    }
+    theme: { color: "#0a7cff" }
   };
 
-  var rzp = new Razorpay(options);
-  rzp.open();
+  new Razorpay(options).open();
 }
 </script>
 
