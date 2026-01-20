@@ -1,20 +1,25 @@
-function payNow() {
-  var options = {
-    "key": "rzp_test_YOUR_KEY_ID",
-    "amount": 1000, // ₹10 ONLY
-    "currency": "INR",
-    "name": "SkillWin",
-    "description": "Skill-based Contest Entry (₹10)",
-    "handler": function (response) {
-      alert("Payment Successful: " + response.razorpay_payment_id);
+var options = {
+  key: "RAZORPAY_KEY_ID_HERE",
+  amount: 1000, // ₹10
+  currency: "INR",
+  name: "SkillWin",
+  description: "Contest Entry Fee",
 
-      // send payment ID to Firebase for verification
-    },
-    "theme": {
-      "color": "#16a34a"
-    }
-  };
+  method: {
+    upi: true,
+    card: false,
+    netbanking: false,
+    wallet: false,
+    emi: false
+  },
 
-  var rzp = new Razorpay(options);
-  rzp.open();
-}
+  handler: function (response) {
+    document.getElementById("paymentBox").classList.add("hidden");
+    document.getElementById("resultBox").classList.remove("hidden");
+    console.log("Payment ID:", response.razorpay_payment_id);
+  },
+
+  theme: {
+    color: "#0a7cff"
+  }
+};
