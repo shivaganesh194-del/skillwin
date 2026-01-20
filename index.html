@@ -1,1 +1,168 @@
-"key": "rzp_test_S5ix2RrfFFJITe"
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SkillWin – You Could Be the Winner</title>
+
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+<style>
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto;
+  background: #f4f6fb;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  max-width: 420px;
+  margin: 40px auto;
+  background: #fff;
+  padding: 25px;
+  border-radius: 14px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+  text-align: center;
+}
+
+h1 {
+  color: #0a7cff;
+  margin-bottom: 5px;
+}
+
+.tagline {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 20px;
+}
+
+.card {
+  background: #f9fafc;
+  padding: 18px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+button {
+  width: 100%;
+  padding: 14px;
+  border-radius: 10px;
+  border: none;
+  font-size: 16px;
+  font-weight: 600;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+.option {
+  background: #e9eef7;
+}
+
+.option:hover {
+  background: #dce5f5;
+}
+
+.pay {
+  background: #0a7cff;
+  color: #fff;
+}
+
+.pay:hover {
+  background: #095ec4;
+}
+
+.success {
+  color: #2e7d32;
+}
+
+.hidden {
+  display: none;
+}
+
+.footer {
+  font-size: 12px;
+  color: #777;
+  margin-top: 20px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>SkillWin</h1>
+<p class="tagline">
+Just ₹10 • One Smart Decision • You May Be The Winner
+</p>
+
+<div class="card" id="questionBox">
+  <h3>🧠 Skill Question</h3>
+  <p>Which number is divisible by <b>9</b>?</p>
+
+  <button class="option" onclick="checkAnswer(27)">27</button>
+  <button class="option" onclick="checkAnswer(28)">28</button>
+  <button class="option" onclick="checkAnswer(29)">29</button>
+  <button class="option" onclick="checkAnswer(31)">31</button>
+</div>
+
+<div class="card hidden" id="paymentBox">
+  <h3 class="success">✅ Correct Answer!</h3>
+  <p>
+    You passed the skill check.<br><br>
+    <b>Try the contest with just ₹10</b><br>
+    Smart people take quick decisions.<br>
+    <b>You may be the winner.</b>
+  </p>
+
+  <button class="pay" onclick="payNow()">Join Now – Pay ₹10</button>
+</div>
+
+<div class="card hidden" id="resultBox">
+  <h3 class="success">🎉 Successfully Entered!</h3>
+  <p>
+    Your entry is confirmed.<br>
+    Good luck! <b>You might be the winner.</b>
+  </p>
+</div>
+
+<div class="footer">
+⚠️ Skill-based promotional contest only.<br>
+18+ participants. Terms & Conditions apply.
+</div>
+
+</div>
+
+<script>
+function checkAnswer(ans) {
+  if (ans === 27) {
+    document.getElementById("paymentBox").classList.remove("hidden");
+  } else {
+    alert("❌ Incorrect answer. Try again.");
+  }
+}
+
+function payNow() {
+  var options = {
+    "key": "rzp_test_S5ix2RrfFFJITe",
+    "amount": 1000,
+    "currency": "INR",
+    "name": "SkillWin",
+    "description": "Contest Entry Fee",
+    "handler": function (response) {
+      document.getElementById("paymentBox").classList.add("hidden");
+      document.getElementById("resultBox").classList.remove("hidden");
+      console.log("Payment ID:", response.razorpay_payment_id);
+    },
+    "theme": {
+      "color": "#0a7cff"
+    }
+  };
+
+  var rzp = new Razorpay(options);
+  rzp.open();
+}
+</script>
+
+</body>
+</html>
