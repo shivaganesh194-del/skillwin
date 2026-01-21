@@ -1,27 +1,24 @@
-<h1>SkillWin</h1>
-<p class="tagline">
-Just ₹10 • Skill-Based Contest • <span class="highlight">5 WINNERS – ₹5 LAKHS EACH</span>
-</p>
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SkillWin – You Are The Winner</title>
+<title>SkillWin – Skill Based Contest</title>
 
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
 <style>
 body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial;
   background: #f4f6fb;
   margin: 0;
+  padding: 0;
 }
 
 .container {
   max-width: 420px;
   margin: 40px auto;
-  background: #fff;
+  background: #ffffff;
   padding: 25px;
   border-radius: 14px;
   box-shadow: 0 10px 25px rgba(0,0,0,0.08);
@@ -30,7 +27,13 @@ body {
 
 h1 {
   color: #0a7cff;
-  margin-bottom: 5px;
+  margin-bottom: 6px;
+}
+
+.tagline {
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 18px;
 }
 
 .highlight {
@@ -38,17 +41,11 @@ h1 {
   font-weight: bold;
 }
 
-.tagline {
-  font-size: 14px;
-  color: #666;
-  margin-bottom: 20px;
-}
-
 .card {
   background: #f9fafc;
   padding: 18px;
   border-radius: 10px;
-  margin-bottom: 20px;
+  margin-bottom: 18px;
 }
 
 button {
@@ -72,7 +69,7 @@ button {
 
 .pay {
   background: #0a7cff;
-  color: #fff;
+  color: #ffffff;
 }
 
 .pay:hover {
@@ -81,6 +78,12 @@ button {
 
 .hidden {
   display: none;
+}
+
+#errorMsg {
+  color: #c62828;
+  font-weight: 600;
+  margin-top: 12px;
 }
 
 .footer {
@@ -97,78 +100,95 @@ button {
 
 <h1>SkillWin</h1>
 <p class="tagline">
-Just ₹10 • One Smart Decision • <span class="highlight">YOU ARE THE WINNER</span>
+Just ₹10 • Skill-Based Contest • <span class="highlight">5 WINNERS – ₹5 LAKHS EACH</span>
 </p>
 
-<!-- QUESTION -->
+<!-- QUESTION SECTION -->
 <div class="card" id="questionBox">
   <h3>🧪 Science Skill Question</h3>
   <p>Which gas is most abundant in Earth’s atmosphere?</p>
 
-  <button class="option" onclick="checkAnswer('Nitrogen')">Oxygen</button>
-  <button class="option" onclick="checkAnswer('Nitrogen')">Carbon Dioxide</button>
+  <button class="option" onclick="checkAnswer('Oxygen')">Oxygen</button>
+  <button class="option" onclick="checkAnswer('Carbon Dioxide')">Carbon Dioxide</button>
   <button class="option" onclick="checkAnswer('Nitrogen')">Nitrogen</button>
-  <button class="option" onclick="checkAnswer('Nitrogen')">Hydrogen</button>
-</div>
-<p id="errorMsg" style="color:#c62828; font-weight:600; display:none;">
-❌ Incorrect answer. This is a skill-based contest. Please try again.
-</p>
+  <button class="option" onclick="checkAnswer('Hydrogen')">Hydrogen</button>
 
-<!-- PAYMENT -->
+  <p id="errorMsg" class="hidden">
+    ❌ Incorrect answer. This is a skill-based contest. Please try again.
+  </p>
+</div>
+
+<!-- PAYMENT SECTION -->
 <div class="card hidden" id="paymentBox">
-  <h3 class="highlight">🎉 YOU ARE THE WINNER</h3>
+  <h3 class="highlight">🎉 YOU ARE ELIGIBLE</h3>
   <p>
-    You cleared the skill question.<br><br>
-    Just try the contest with <b>₹10</b>.<br>
-    <b>Smart people take decisions fast.</b><br><br>
+    You answered the skill question correctly.<br><br>
+    <b>5 Winners</b> will be selected.<br>
+    Each winner receives <b>₹5,00,000</b>.<br><br>
+    Entry fee is just <b>₹10</b>.<br>
+    Smart people take decisions fast.<br><br>
     <span class="highlight">
-      Maybe at last… you are the winner.
+      Maybe at last… you are one of the winners.
     </span>
   </p>
 
   <button class="pay" onclick="payNow()">Join Immediately – Pay ₹10</button>
 </div>
 
-<!-- SUCCESS -->
+<!-- SUCCESS SECTION -->
 <div class="card hidden" id="resultBox">
   <h3 class="highlight">✅ Entry Successful</h3>
   <p>
-    You’re officially in.<br>
-    Good luck! <b>Maybe you are the winner.</b>
+    You are officially entered.<br>
+    Good luck — <b>you may be one of the winners.</b>
   </p>
 </div>
 
 <div class="footer">
-⚠️ Skill-based promotional contest only.<br>
-18+ participants • Terms & Conditions apply.
+⚠️ This is a skill-based promotional contest.<br>
+5 winners will be selected from correct entries.<br>
+Entry fee ₹10 • 18+ only • Terms & Conditions apply.
 </div>
 
 </div>
 
 <script>
-function checkAnswer(correct) {
-  // correct answer is Nitrogen
-  document.getElementById("paymentBox").classList.remove("hidden");
+function checkAnswer(selected) {
+  const correctAnswer = "Nitrogen";
+
+  document.getElementById("errorMsg").classList.add("hidden");
+
+  if (selected === correctAnswer) {
+    document.getElementById("paymentBox").classList.remove("hidden");
+  } else {
+    document.getElementById("errorMsg").classList.remove("hidden");
+  }
 }
 
 function payNow() {
   var options = {
-    key: "rzp_test_S5ix2RrfFFJITe",
-    amount: 1000,
+    key: "rzp_test_S5ix2RrfFFJITe",   // <-- PUT YOUR KEY ID
+    amount: 1000,                 // ₹10 = 1000 paise
     currency: "INR",
     name: "SkillWin",
     description: "Skill-Based Contest Entry",
+
     method: {
       upi: true,
       card: false,
       netbanking: false,
-      wallet: false
+      wallet: false,
+      emi: false
     },
+
     handler: function () {
       document.getElementById("paymentBox").classList.add("hidden");
       document.getElementById("resultBox").classList.remove("hidden");
     },
-    theme: { color: "#0a7cff" }
+
+    theme: {
+      color: "#0a7cff"
+    }
   };
 
   new Razorpay(options).open();
