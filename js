@@ -1,25 +1,20 @@
-var options = {
-  key: "RAZORPAY_KEY_ID_HERE",
-  amount: 1000, // ₹10
-  currency: "INR",
-  name: "SkillWin",
-  description: "Contest Entry Fee",
+import Razorpay from "razorpay";
 
-  method: {
-    upi: true,
-    card: false,
-    netbanking: false,
-    wallet: false,
-    emi: false
-  },
+export default async function handler(req, res) {
+  try {
+    const razorpay = new Razorpay({
+      key_id: process.env.RAZORPAY_KEY_ID,
+      key_secret: process.env.RAZORPAY_KEY_SECRET
+    });
 
-  handler: function (response) {
-    document.getElementById("paymentBox").classList.add("hidden");
-    document.getElementById("resultBox").classList.remove("hidden");
-    console.log("Payment ID:", response.razorpay_payment_id);
-  },
+    const order = await razorpay.orders.create({
+      amount: 1000, // ₹10
+      currency: "INR",
+      receipt: "skillwin_entry"
+    });
 
-  theme: {
-    color: "#0a7cff"
+    res.status(200).json(order);
+  } catch (err) {
+    res.status(500).json({ error: "Order creation failed" });
   }
-};
+}
