@@ -1,11 +1,11 @@
+<script>
 function shareWhatsApp() {
-  const text = `🎉 I just entered the SkillWin Contest!
-🎟️ Ticket Price: ₹10
-🏆 Prize: ₹10,00,000
-📅 Draw: 30 March 2026, 8:00 PM IST
-
-Enter now 👉 https://shivaganesh194.github.io/shivaganesh194-del/`;
-
-  const url = "https://wa.me/?text=" + encodeURIComponent(text);
-  window.open(url, "_blank");
+  const text = encodeURIComponent(
+    "I just joined SkillWin 🎉\n" +
+    "Answer a skill question & enter with just ₹10.\n" +
+    "5 winners get ₹5 Lakhs each.\n" +
+    "Try your luck 👉 " + window.location.href
+  );
+  window.open("https://wa.me/?text=" + text, "_blank");
 }
+</script>
