@@ -1,7 +1,77 @@
-method: {
-  upi: true,
-  card: false,
-  netbanking: false,
-  wallet: false,
-  paylater: false
-}
+// payment.js
+// UPI-only Razorpay integration
+
+const PAY_AMOUNT = 10; // ₹10
+const API_URL = "/api/create-order"; // Vercel backend
+
+document.getElementById("payNowBtn").addEventListener("click", async () => {
+  try {
+    // 1. Create order from backend
+    const res = await fetch(API_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        amount: PAY_AMOUNT
+      })
+    });
+
+    const order = await res.json();
+
+    if (!order.id) {
+      alert("Failed to create order");
+      return;
+    }
+
+    // 2. Razorpay options (UPI ONLY)
+    const options = {
+      key: "rzp_test_S5ix2RrfFFJITe", // 🔴 replace with your key OR use env injected in HTML
+      amount: order.amount,
+      currency: "INR",
+      name: "SkillWin",
+      description: "Contest Entry Fee",
+      order_id: order.id,
+
+      method: {
+        upi: true,
+        card: false,
+        netbanking: false,
+        wallet: false,
+        paylater: false
+      },
+
+      handler: function (response) {
+        console.log("Payment Success", response);
+
+        alert("Payment Successful 🎉");
+
+        // OPTIONAL: redirect after success
+        window.location.href = "/success.html";
+      },
+
+      prefill: {
+        contact: "",
+        email: ""
+      },
+
+      theme: {
+        color: "#1e40af"
+      },
+
+      modal: {
+        ondismiss: function () {
+          alert("Payment cancelled");
+        }
+      }
+    };
+
+    // 3. Open Razorpay checkout
+    const rzp = new Razorpay(options);
+    rzp.open();
+
+  } catch (err) {
+    console.error(err);
+    alert("Something went wrong");
+  }
+});
