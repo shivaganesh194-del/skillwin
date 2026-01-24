@@ -1,21 +1,7 @@
-fetch("/api/create-order", { method: "POST" })
-  .then(res => res.json())
-  .then(order => {
-    var options = {
-      key: "RAZORPAY_KEY_ID", // public key only
-      amount: order.amount,
-      currency: "INR",
-      order_id: order.id,
-      name: "SkillWin",
-      description: "Contest Entry ₹10",
-      method: {
-        upi: true,
-        card: false,
-        netbanking: false,
-        wallet: false
-      }
-    };
-
-    var rzp = new Razorpay(options);
-    rzp.open();
-  });
+method: {
+  upi: true,
+  card: false,
+  netbanking: false,
+  wallet: false,
+  paylater: false
+}
