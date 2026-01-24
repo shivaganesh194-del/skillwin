@@ -19,3 +19,4 @@ function payNow() {
   var rzp = new Razorpay(options);
   rzp.open();
 }
+key: window.RAZORPAY_KEY,
