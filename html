@@ -5,3 +5,21 @@
 </script>
 <script src="payment.js"></script>
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<button onclick="shareWhatsApp()">Refer & Get 1 Free Ticket</button>
+
+<script>
+function shareWhatsApp() {
+  const phone = document.getElementById("phone").value;
+
+  const msg = `I joined SkillWin contest 🎉  
+Answer 1 question, pay ₹10 & win big prizes.  
+Join using my link and I get 1 free ticket 😄  
+
+👉 https://skillwin.vercel.app/?ref=${phone}`;
+
+  window.open(
+    "https://wa.me/?text=" + encodeURIComponent(msg),
+    "_blank"
+  );
+}
+</script>
