@@ -15,6 +15,6 @@ export default async function handler(req, res) {
   res.status(200).json({
     order_id: order.id,
     amount: order.amount,
-    key: process.env.RAZORPAY_KEY_ID,
+    key: process.env.rzp_test_S5ix2RrfFFJITe,
   });
 }
