@@ -55,3 +55,19 @@ Join using my link 👉 ${link}`;
     "_blank"
   );
 }
+const referrerId = localStorage.getItem("referrer_id");
+
+if (referrerId) {
+  await supabase.from("tickets").insert({
+    user_id: referrerId,
+    contest_id: contestId,
+    source: "referral"
+  });
+
+  await supabase.from("referrals").insert({
+    referrer_id: referrerId,
+    referee_phone: phone
+  });
+
+  localStorage.removeItem("referrer_id");
+}
