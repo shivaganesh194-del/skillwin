@@ -2,30 +2,18 @@
 
 <script>
 async function startPayment() {
-  // 1️⃣ Create order from backend (Vercel)
-  const response = await fetch("/api/create-order", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      amount: 10, // Rs.10
-      contest_id: "SCIENCE_CONTEST_001"
-    })
+  const res = await fetch('/api/create-order', {
+    method: 'POST'
   });
 
-  const data = await response.json();
+  const data = await res.json();
 
-  if (!data.order_id) {
-    alert("Unable to create order. Try again.");
-    return;
-  }
-
-  // 2️⃣ Razorpay options – UPI ONLY
   const options = {
-    key: "rzp_test_S5ix2RrfFFJITe", // test or live
+    key: data.key,
     amount: data.amount,
     currency: "INR",
-    name: "Science Mega Contest",
-    description: "Answer & Win",
+    name: "SkillWin Contest",
+    description: "Contest Entry Fee",
     order_id: data.order_id,
 
     method: {
@@ -37,29 +25,9 @@ async function startPayment() {
       paylater: false
     },
 
-    handler: async function (response) {
-      // 3️⃣ Save payment + ticket
-      await fetch("/api/payment-success", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          order_id: data.order_id,
-          payment_id: response.razorpay_payment_id
-        })
-      });
-
-      // 4️⃣ Success message
-      document.body.innerHTML = `
-        <h2>🎉 Payment Successful!</h2>
-        <p>Your ticket has been generated.</p>
-        <p><b>You are the winner*</b></p>
-        <p>Final results will be notified shortly.</p>
-        <p>Terms & Conditions applied.</p>
-      `;
-    },
-
-    theme: {
-      color: "#0f172a"
+    handler: function (response) {
+      alert("Payment successful! Ticket will be sent shortly.");
+      // redirect or show success message
     }
   };
 
@@ -67,3 +35,5 @@ async function startPayment() {
   rzp.open();
 }
 </script>
+
+<button onclick="startPayment()">Pay ₹10 via UPI</button>
