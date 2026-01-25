@@ -1,77 +1,69 @@
-// payment.js
-// UPI-only Razorpay integration
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
-const PAY_AMOUNT = 10; // ₹10
-const API_URL = "/api/create-order"; // Vercel backend
+<script>
+async function startPayment() {
+  // 1️⃣ Create order from backend (Vercel)
+  const response = await fetch("/api/create-order", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      amount: 10, // Rs.10
+      contest_id: "SCIENCE_CONTEST_001"
+    })
+  });
 
-document.getElementById("payNowBtn").addEventListener("click", async () => {
-  try {
-    // 1. Create order from backend
-    const res = await fetch(API_URL, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        amount: PAY_AMOUNT
-      })
-    });
+  const data = await response.json();
 
-    const order = await res.json();
-
-    if (!order.id) {
-      alert("Failed to create order");
-      return;
-    }
-
-    // 2. Razorpay options (UPI ONLY)
-    const options = {
-      key: "rzp_test_S5ix2RrfFFJITe", // 🔴 replace with your key OR use env injected in HTML
-      amount: order.amount,
-      currency: "INR",
-      name: "SkillWin",
-      description: "Contest Entry Fee",
-      order_id: order.id,
-
-      method: {
-        upi: true,
-        card: false,
-        netbanking: false,
-        wallet: false,
-        paylater: false
-      },
-
-      handler: function (response) {
-        console.log("Payment Success", response);
-
-        alert("Payment Successful 🎉");
-
-        // OPTIONAL: redirect after success
-        window.location.href = "/success.html";
-      },
-
-      prefill: {
-        contact: "",
-        email: ""
-      },
-
-      theme: {
-        color: "#1e40af"
-      },
-
-      modal: {
-        ondismiss: function () {
-          alert("Payment cancelled");
-        }
-      }
-    };
-
-    // 3. Open Razorpay checkout
-    const rzp = new Razorpay(options);
-    rzp.open();
-
-  } catch (err) {
-    console.error(err);
-    alert("Something went wrong");
+  if (!data.order_id) {
+    alert("Unable to create order. Try again.");
+    return;
   }
-});
+
+  // 2️⃣ Razorpay options – UPI ONLY
+  const options = {
+    key: "RAZORPAY_KEY_ID", // test or live
+    amount: data.amount,
+    currency: "INR",
+    name: "Science Mega Contest",
+    description: "Answer & Win",
+    order_id: data.order_id,
+
+    method: {
+      upi: true,
+      card: false,
+      netbanking: false,
+      wallet: false,
+      emi: false,
+      paylater: false
+    },
+
+    handler: async function (response) {
+      // 3️⃣ Save payment + ticket
+      await fetch("/api/payment-success", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          order_id: data.order_id,
+          payment_id: response.razorpay_payment_id
+        })
+      });
+
+      // 4️⃣ Success message
+      document.body.innerHTML = `
+        <h2>🎉 Payment Successful!</h2>
+        <p>Your ticket has been generated.</p>
+        <p><b>You are the winner*</b></p>
+        <p>Final results will be notified shortly.</p>
+        <p>Terms & Conditions applied.</p>
+      `;
+    },
+
+    theme: {
+      color: "#0f172a"
+    }
+  };
+
+  const rzp = new Razorpay(options);
+  rzp.open();
+}
+</script>
