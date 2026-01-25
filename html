@@ -60,3 +60,9 @@ https://yourdomain.com/?ref=${referralCode}`
   window.open(`https://wa.me/?text=${text}`, "_blank");
 }
 </script>
+function shareWhatsApp() {
+  const msg = encodeURIComponent(
+    "I joined SkillWin Contest! Answer a simple question & win ₹5 Lakhs. Join now 👇\nhttps://your-live-link.vercel.app"
+  );
+  window.open(`https://wa.me/?text=${msg}`);
+}
