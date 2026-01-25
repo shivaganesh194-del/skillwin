@@ -40,3 +40,18 @@ var options = {
     `;
   }
 };
+async function shareReferral() {
+  const userId = localStorage.getItem("user_id");
+  const phone = localStorage.getItem("phone");
+
+  const link = `${window.location.origin}?ref=${userId}`;
+
+  const text = `I joined SkillWin 🎉  
+Answer & Win ₹5 Lakhs!  
+Join using my link 👉 ${link}`;
+
+  window.open(
+    `https://wa.me/?text=${encodeURIComponent(text)}`,
+    "_blank"
+  );
+}
