@@ -28,3 +28,15 @@ export default async function handler(req, res) {
 
   res.status(200).json({ success: true });
 }
+{entrySuccess && (
+  <a
+    href={`https://wa.me/?text=Join SkillWin 🎯
+Pay ₹10 & win ₹5 Lakhs!
+Use my referral: ${userPhone}
+https://skillwin.in`}
+    target="_blank"
+    style={{ display: "block", marginTop: 12 }}
+  >
+    📲 Share on WhatsApp & Get 1 FREE Ticket
+  </a>
+)}
