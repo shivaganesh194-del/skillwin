@@ -54,3 +54,9 @@ function shareWhatsApp() {
   );
   window.open(`https://wa.me/?text=${msg}`, "_blank");
 }
+const params = new URLSearchParams(window.location.search);
+const referrerId = params.get("ref");
+
+if (referrerId) {
+  localStorage.setItem("referrer_id", referrerId);
+}
