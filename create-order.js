@@ -18,3 +18,25 @@ export default async function handler(req, res) {
     key: process.env.rzp_test_S5ix2RrfFFJITe,
   });
 }
+async function createTicket(phone, isCorrect) {
+  let { data: user } = await supabase
+    .from("users")
+    .select("id")
+    .eq("phone", phone)
+    .single();
+
+  if (!user) {
+    const { data: newUser } = await supabase
+      .from("users")
+      .insert({ phone })
+      .select()
+      .single();
+    user = newUser;
+  }
+
+  await supabase.from("tickets").insert({
+    user_id: user.id,
+    contest_id: "science-01",
+    is_correct: isCorrect
+  });
+}
