@@ -48,3 +48,9 @@ export default function handler(req, res) {
     });
   }
 }
+function shareWhatsApp() {
+  const msg = encodeURIComponent(
+    "I joined SkillWin Contest! Answer a simple science question & win ₹5 Lakhs 🏆\nJoin now 👇\nhttps://YOUR_LIVE_LINK.vercel.app"
+  );
+  window.open(`https://wa.me/?text=${msg}`, "_blank");
+}
