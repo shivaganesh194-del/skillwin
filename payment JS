@@ -21,7 +21,7 @@ async function startPayment() {
 
   // 2️⃣ Razorpay options – UPI ONLY
   const options = {
-    key: "RAZORPAY_KEY_ID", // test or live
+    key: "rzp_test_S5ix2RrfFFJITe", // test or live
     amount: data.amount,
     currency: "INR",
     name: "Science Mega Contest",
