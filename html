@@ -42,3 +42,21 @@ Join using my link and I get 1 free ticket 😄
 }
 </script>
 <button onclick="startPayment()">Pay ₹10 & Join Contest</button>
+<button onclick="shareWhatsApp()">Share & Get Free Ticket</button>
+
+<script>
+function shareWhatsApp() {
+  const referralCode = localStorage.getItem("referral_code");
+
+  const text = encodeURIComponent(
+    `I joined SkillWin Contest 🎯
+Answer one question & win big 💰
+
+Join using my referral code: ${referralCode}
+Pay just ₹10 via UPI 👇
+https://yourdomain.com/?ref=${referralCode}`
+  );
+
+  window.open(`https://wa.me/?text=${text}`, "_blank");
+}
+</script>
