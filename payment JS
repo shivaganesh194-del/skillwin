@@ -24,50 +24,18 @@ var options = {
         payment_id: response.razorpay_payment_id
       }),
     });
-
-    const data = await res.json();
-
-    document.getElementById("ticketBox").innerHTML = `
-      <h3>🎟 Your Ticket</h3>
-      <b>${data.ticketNumber}</b>
-      <p>Winners will be notified shortly</p>
-
-      <a href="https://wa.me/?text=I just joined SkillWin and got ticket ${data.ticketNumber}. Join now for ₹10 👉 ${window.location.href}"
-         target="_blank"
-         style="display:block;margin-top:12px;color:#25D366;font-weight:bold;">
-        📢 Share on WhatsApp & Get 1 Extra Ticket
-      </a>
-    `;
+const options = {
+  key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
+  amount: 1000,
+  currency: "INR",
+  name: "SkillWin",
+  description: "Contest Entry",
+  handler: function (response) {
+    console.log(response);
   }
 };
-async function shareReferral() {
-  const userId = localStorage.getItem("user_id");
-  const phone = localStorage.getItem("phone");
 
-  const link = `${window.location.origin}?ref=${userId}`;
+const rzp = new window.Razorpay(options);
+rzp.open();
 
-  const text = `I joined SkillWin 🎉  
-Answer & Win ₹5 Lakhs!  
-Join using my link 👉 ${link}`;
-
-  window.open(
-    `https://wa.me/?text=${encodeURIComponent(text)}`,
-    "_blank"
-  );
-}
-const referrerId = localStorage.getItem("referrer_id");
-
-if (referrerId) {
-  await supabase.from("tickets").insert({
-    user_id: referrerId,
-    contest_id: contestId,
-    source: "referral"
-  });
-
-  await supabase.from("referrals").insert({
-    referrer_id: referrerId,
-    referee_phone: phone
-  });
-
-  localStorage.removeItem("referrer_id");
-}
+   
