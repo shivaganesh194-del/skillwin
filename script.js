@@ -20,3 +20,7 @@ function payNow() {
   rzp.open();
 }
 key: window.RAZORPAY_KEY,
+<div id="referralBox" style="display:none; margin-top:20px;">
+  <h3>🎁 Refer & Get 1 Extra Ticket FREE</h3>
+  <button onclick="shareReferral()">Share on WhatsApp</button>
+</div>
