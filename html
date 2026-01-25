@@ -1,75 +1,15 @@
-<a href="terms.html">VIEW TERMS & CONDITIONS</a>
-<button id="payNowBtn">Pay ₹10 via UPI</button>
-<script>
-  window.RAZORPAY_KEY = "rzp_test_S5ix2RrfFFJITe";
-</script>
-<script src="payment.js"></script>
+<button id="payNowBtn">Pay ₹10</button>
+
+<div id="entry-success" style="display:none;">
+  ✅ Entry Successful  
+  <br /><br />
+  <a
+    href="https://wa.me/?text=Join SkillWin 🎯 Pay ₹10 & win ₹5 Lakhs!"
+    target="_blank"
+  >
+    📲 Share on WhatsApp & Get 1 Free Ticket
+  </a>
+</div>
+
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-<button onclick="shareWhatsApp()">Refer & Get 1 Free Ticket</button>
-
-<script>
-function shareWhatsApp() {
-  const phone = document.getElementById("phone").value;
-
-  const msg = `I joined SkillWin contest 🎉  
-Answer 1 question, pay ₹10 & win big prizes.  
-Join using my link and I get 1 free ticket 😄  
-
-👉 https://skillwin.vercel.app/?ref=${phone}`;
-
-  window.open(
-    "https://wa.me/?text=" + encodeURIComponent(msg),
-    "_blank"
-  );
-}
-</script>
-<button onclick="shareWhatsApp()">Refer & Get 1 Free Ticket</button>
-
-<script>
-function shareWhatsApp() {
-  const phone = document.getElementById("phone").value;
-
-  const msg = `I joined SkillWin contest 🎉  
-Answer 1 question, pay ₹10 & win big prizes.  
-Join using my link and I get 1 free ticket 😄  
-
-👉 https://skillwin.vercel.app/?ref=${phone}`;
-
-  window.open(
-    "https://wa.me/?text=" + encodeURIComponent(msg),
-    "_blank"
-  );
-}
-</script>
-<button onclick="startPayment()">Pay ₹10 & Join Contest</button>
-<button onclick="shareWhatsApp()">Share & Get Free Ticket</button>
-
-<script>
-function shareWhatsApp() {
-  const referralCode = localStorage.getItem("referral_code");
-
-  const text = encodeURIComponent(
-    `I joined SkillWin Contest 🎯
-Answer one question & win big 💰
-
-Join using my referral code: ${referralCode}
-Pay just ₹10 via UPI 👇
-https://yourdomain.com/?ref=${referralCode}`
-  );
-
-  window.open(`https://wa.me/?text=${text}`, "_blank");
-}
-</script>
-function shareWhatsApp() {
-  const msg = encodeURIComponent(
-    "I joined SkillWin Contest! Answer a simple question & win ₹5 Lakhs. Join now 👇\nhttps://your-live-link.vercel.app"
-  );
-  window.open(`https://wa.me/?text=${msg}`);
-}
-<p>
-  By continuing you agree to
-  <a href="/terms.html" target="_blank">Terms & Conditions</a>
-</p>
-<button onclick="shareWhatsApp()">
-  Refer & Get 1 Extra Ticket
-</button>
+<script src="payment.js"></script>
