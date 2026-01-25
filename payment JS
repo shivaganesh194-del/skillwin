@@ -34,6 +34,24 @@ const options = {
     console.log(response);
   }
 };
+handler: async function (response) {
+
+  // 🔹 1. Save ticket in Supabase
+  await fetch("/api/create-ticket", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      phone: userPhone,                // the phone number user entered
+      contest_id: "science_contest_1", // contest id
+      is_correct: true                 // user answered correctly
+    })
+  });
+
+  // 🔹 2. Show success screen
+  setEntrySuccess(true);
+}
 
 const rzp = new window.Razorpay(options);
 rzp.open();
