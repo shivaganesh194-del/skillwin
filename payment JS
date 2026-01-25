@@ -1,39 +1,42 @@
-<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+var options = {
+  key: "rzp_test_S5ix2RrfFFJITe",
+  amount: 1000, // ₹10
+  currency: "INR",
+  name: "SkillWin",
+  description: "Skill Contest Entry",
 
-<script>
-async function startPayment() {
-  const res = await fetch('/api/create-order', {
-    method: 'POST'
-  });
+  method: {
+    upi: true,
+    card: false,
+    netbanking: false,
+    wallet: false,
+    paylater: false
+  },
 
-  const data = await res.json();
+  handler: async function (response) {
+    const phone = document.getElementById("phone").value;
 
-  const options = {
-    key: data.key,
-    amount: data.amount,
-    currency: "INR",
-    name: "SkillWin Contest",
-    description: "Contest Entry Fee",
-    order_id: data.order_id,
+    const res = await fetch("/api/create-order", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        phone: phone,
+        payment_id: response.razorpay_payment_id
+      }),
+    });
 
-    method: {
-      upi: true,
-      card: false,
-      netbanking: false,
-      wallet: false,
-      emi: false,
-      paylater: false
-    },
+    const data = await res.json();
 
-    handler: function (response) {
-      alert("Payment successful! Ticket will be sent shortly.");
-      // redirect or show success message
-    }
-  };
+    document.getElementById("ticketBox").innerHTML = `
+      <h3>🎟 Your Ticket</h3>
+      <b>${data.ticketNumber}</b>
+      <p>Winners will be notified shortly</p>
 
-  const rzp = new Razorpay(options);
-  rzp.open();
-}
-</script>
-
-<button onclick="startPayment()">Pay ₹10 via UPI</button>
+      <a href="https://wa.me/?text=I just joined SkillWin and got ticket ${data.ticketNumber}. Join now for ₹10 👉 ${window.location.href}"
+         target="_blank"
+         style="display:block;margin-top:12px;color:#25D366;font-weight:bold;">
+        📢 Share on WhatsApp & Get 1 Extra Ticket
+      </a>
+    `;
+  }
+};
